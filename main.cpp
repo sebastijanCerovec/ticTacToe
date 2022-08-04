@@ -205,7 +205,7 @@ int main() {
 		}
 
 		if (!victory)
-			std::cout << "Draw.Cat's game!" << std::endl;
+			std::cout << "Draw. Cat's game!" << std::endl;
 
 		char choice;
 		do {
