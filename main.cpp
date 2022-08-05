@@ -4,6 +4,7 @@ const int NUMBER_OF_SPACES = 9;
 const char CROSS = 'X';
 const char NOUGHT = 'O';
 const char EMPTY = ' ';
+const bool XSTARTS = 0; // player (X) always starts first
 
 // a function that writes out the opening ASCII image
 void writeOutOpeningImage() {
@@ -167,8 +168,6 @@ int main() {
 
 	do {
 
-		const bool playerXsTurn = 0; // player (X) always starts first
-
 		bool victory = false;
 
 		char spaces[NUMBER_OF_SPACES];
@@ -176,21 +175,22 @@ int main() {
 
 		memset(spaces, EMPTY, sizeof(spaces));
 
-		bool nextInLine = playerXsTurn;
+		bool nextInLine = XSTARTS;
 
 		writeOutOpeningImage();
 
 		writeOutGrid(spaces);
 
+		// ask player which space to mark and check the input
 		for (int i = 0; i < NUMBER_OF_SPACES; i++)
 		{
 
 			int position;
 			int index;
-			int currentMark;
+			char currentMark;
 
 			do {
-				if (nextInLine == playerXsTurn)
+				if (nextInLine == XSTARTS)
 					std::cout << "Player (" << CROSS << "), place your mark!" << std::endl;
 				else
 					std::cout << "Player (" << NOUGHT << "), place your mark!" << std::endl;
@@ -214,7 +214,7 @@ int main() {
 
 
 			// select mark
-			if (nextInLine == playerXsTurn)
+			if (nextInLine == XSTARTS)
 				currentMark = CROSS;
 			else
 				currentMark = NOUGHT;
