@@ -2,6 +2,35 @@
 
 const int NUMBER_OF_SPACES = 9;
 
+// a function that writes out the opening ASCII image
+void writeOutOpeningImage() {
+	std::cout << "%%          %% |               |              " << std::endl;
+	std::cout << "  %%      %%   |               |              " << std::endl;
+	std::cout << "    %%  %%     |               |              " << std::endl;
+	std::cout << "      %%       |               |              " << std::endl;
+	std::cout << "    %%  %%     |               |              " << std::endl;
+	std::cout << "  %%      %%   |               |              " << std::endl;
+	std::cout << "%%          %% |               |              " << std::endl;
+	std::cout << "---------------+---------------+--------------" << std::endl;
+	std::cout << "               |     %%%%      |              " << std::endl;
+	std::cout << "               |  %%      %%   |              " << std::endl;
+	std::cout << "               | %%        %%  |              " << std::endl;
+	std::cout << "               |%%          %% |              " << std::endl;
+	std::cout << "               |%%          %% |              " << std::endl;
+	std::cout << "               | %%        %%  |              " << std::endl;
+	std::cout << "               |  %%      %%   |              " << std::endl;
+	std::cout << "               |     %%%%      |              " << std::endl;
+	std::cout << "---------------+---------------+--------------" << std::endl;
+	std::cout << "               |               |              " << std::endl;
+	std::cout << "               |               |           TIC" << std::endl;
+	std::cout << "               |               |           TAC" << std::endl;
+	std::cout << "               |               |           TOE" << std::endl;
+	std::cout << "               |               |              " << std::endl;
+	std::cout << "               |               |    Sebastijan" << std::endl;
+	std::cout << "               |               |       Cerovec" << std::endl;
+}
+
+// a function that writes out the grid
 void writeOutGrid(char spaces[NUMBER_OF_SPACES]) {
 
 	std::cout << std::endl;
@@ -40,6 +69,7 @@ void writeOutGrid(char spaces[NUMBER_OF_SPACES]) {
 	std::cout << std::endl;
 }
 
+// a function that checks if a player has succeeded in placing three marks in a single row
 bool checkRow(char spaces[NUMBER_OF_SPACES], int firstSpace, int secondSpace, int thirdSpace) {
 	if (spaces[firstSpace] == spaces[secondSpace] && spaces[firstSpace] == spaces[thirdSpace] && (spaces[firstSpace] == 'X' || spaces[firstSpace] == 'O'))
 		return true;
@@ -47,6 +77,7 @@ bool checkRow(char spaces[NUMBER_OF_SPACES], int firstSpace, int secondSpace, in
 		return false;
 }
 
+// a function that checks the grid if a player has succeeded in placing three marks in a horizontal, vertical, or diagonal row 
 bool checkGrid(char spaces[NUMBER_OF_SPACES]) {
 	if (checkRow(spaces, 0, 1, 2)
 		||
@@ -68,6 +99,30 @@ bool checkGrid(char spaces[NUMBER_OF_SPACES]) {
 		return false;
 }
 
+// a function that asks if the players want another game
+bool askPlayersForAnotherGame() {
+	char choice;
+	do {
+		std::cout << "Want to play again? (y/n): " << std::endl;
+
+		std::cin >> choice;
+
+		switch (choice) {
+		case 'N':
+		case 'n':
+			std::cout << std::endl << "Thank you for playing!" << std::endl;
+			return false;
+		case 'Y':
+		case 'y':
+			std::cout << std::endl << "Here we go!" << std::endl << std::endl;
+			return true;
+		default:
+			std::cout << "Wrong answer." << std::endl;
+			break;
+		}
+	} while (!(choice == 'N' || choice == 'n' || choice == 'y' || choice == 'Y'));
+}
+
 int main() {
 
 	bool wantToPlay = true;
@@ -82,41 +137,14 @@ int main() {
 
 		bool victory = false;
 
-
 		char spaces[NUMBER_OF_SPACES];
 		bool markedSpaces[NUMBER_OF_SPACES] = { 0 };
 
-		for (int i = 0; i < NUMBER_OF_SPACES; i++) {
-			spaces[i] = empty;
-		}
+		memset(spaces, empty, sizeof(spaces));
 
 		bool nextInLine = playerXsTurn;
 
-		std::cout << "%%          %% |               |              " << std::endl;
-		std::cout << "  %%      %%   |               |              " << std::endl;
-		std::cout << "    %%  %%     |               |              " << std::endl;
-		std::cout << "      %%       |               |              " << std::endl;
-		std::cout << "    %%  %%     |               |              " << std::endl;
-		std::cout << "  %%      %%   |               |              " << std::endl;
-		std::cout << "%%          %% |               |              " << std::endl;
-		std::cout << "---------------+---------------+--------------" << std::endl;
-		std::cout << "               |     %%%%      |              " << std::endl;
-		std::cout << "               |  %%      %%   |              " << std::endl;
-		std::cout << "               | %%        %%  |              " << std::endl;
-		std::cout << "               |%%          %% |              " << std::endl;
-		std::cout << "               |%%          %% |              " << std::endl;
-		std::cout << "               | %%        %%  |              " << std::endl;
-		std::cout << "               |  %%      %%   |              " << std::endl;
-		std::cout << "               |     %%%%      |              " << std::endl;
-		std::cout << "---------------+---------------+--------------" << std::endl;
-		std::cout << "               |               |              " << std::endl;
-		std::cout << "               |               |           TIC" << std::endl;
-		std::cout << "               |               |           TAC" << std::endl;
-		std::cout << "               |               |           TOE" << std::endl;
-		std::cout << "               |               |              " << std::endl;
-		std::cout << "               |               |    Sebastijan" << std::endl;
-		std::cout << "               |               |       Cerovec" << std::endl;
-
+		writeOutOpeningImage();
 
 		writeOutGrid(spaces);
 
@@ -162,7 +190,7 @@ int main() {
 			spaces[index] = currentMark;
 			markedSpaces[index] = true;
 
-			// put the next player in line to play
+			// switch to the next player in line
 			nextInLine = !nextInLine;
 
 			writeOutGrid(spaces);
@@ -207,29 +235,7 @@ int main() {
 		if (!victory)
 			std::cout << "Draw. Cat's game!" << std::endl;
 
-		char choice;
-		do {
-			std::cout << "Want to play again? (y/n): " << std::endl;
-
-			std::cin >> choice;
-
-			switch (choice) {
-			case 'N':
-			case 'n':
-				std::cout << std::endl << "Thank you for playing!" << std::endl;
-				wantToPlay = false;
-				break;
-			case 'Y':
-			case 'y':
-				std::cout << std::endl << "Here we go!" << std::endl << std::endl;
-				wantToPlay = true;
-				break;
-			default:
-				std::cout << "Wrong answer." << std::endl;
-				break;
-			}
-
-		} while (!(choice == 'N' || choice == 'n' || choice == 'y' || choice == 'Y'));
+		wantToPlay = askPlayersForAnotherGame();
 
 	} while (wantToPlay);
 
