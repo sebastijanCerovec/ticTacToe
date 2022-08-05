@@ -1,6 +1,9 @@
 #include <iostream>
 
-const int NUMBER_OF_SPACES = 9;
+const int NUMBER_OF_SPACES = 9;		
+const char CROSS = 'X';
+const char NOUGHT = 'O';
+const char EMPTY = ' ';
 
 // a function that writes out the opening ASCII image
 void writeOutOpeningImage() {
@@ -71,7 +74,7 @@ void writeOutGrid(char spaces[NUMBER_OF_SPACES]) {
 
 // a function that checks if a player has succeeded in placing three marks in a single row
 bool checkRow(char spaces[NUMBER_OF_SPACES], int firstSpace, int secondSpace, int thirdSpace) {
-	if (spaces[firstSpace] == spaces[secondSpace] && spaces[firstSpace] == spaces[thirdSpace] && (spaces[firstSpace] == 'X' || spaces[firstSpace] == 'O'))
+	if (spaces[firstSpace] == spaces[secondSpace] && spaces[firstSpace] == spaces[thirdSpace] && (spaces[firstSpace] == CROSS || spaces[firstSpace] == NOUGHT))
 		return true;
 	else
 		return false;
@@ -129,18 +132,14 @@ int main() {
 
 	do {
 
-		char cross = 'X';
-		char nought = 'O';
-		char empty = ' ';
-
-		const bool playerXsTurn = 0;
+		const bool playerXsTurn = 0; // player (X) always starts first
 
 		bool victory = false;
 
 		char spaces[NUMBER_OF_SPACES];
 		bool markedSpaces[NUMBER_OF_SPACES] = { 0 };
 
-		memset(spaces, empty, sizeof(spaces));
+		memset(spaces, EMPTY, sizeof(spaces));
 
 		bool nextInLine = playerXsTurn;
 
@@ -157,9 +156,9 @@ int main() {
 
 			do {
 				if (nextInLine == playerXsTurn)
-					std::cout << "Player (X), place your mark!" << std::endl;
+					std::cout << "Player (" << CROSS << "), place your mark!" << std::endl;
 				else
-					std::cout << "Player (O), place your mark!" << std::endl;
+					std::cout << "Player (" << NOUGHT << "), place your mark!" << std::endl;
 				std::cout << "Mark space: (1-" << NUMBER_OF_SPACES << ") " << std::endl;
 				std::cin >> position;
 				if (std::cin.fail()) {
@@ -182,9 +181,9 @@ int main() {
 
 			// select mark
 			if (nextInLine == playerXsTurn)
-				currentMark = cross;
+				currentMark = CROSS;
 			else
-				currentMark = nought;
+				currentMark = NOUGHT;
 
 			// mark space and save information that marked space is taken
 			spaces[index] = currentMark;
@@ -201,8 +200,8 @@ int main() {
 				{
 					std::cout << "Victory! ";
 
-					if (currentMark == cross) {
-						std::cout << "Player (X) won!" << std::endl << std::endl;
+					if (currentMark == CROSS) {
+						std::cout << "Player (" << CROSS << ") won! Crosses won!" << std::endl << std::endl;
 						std::cout << "%%          %%" << std::endl;
 						std::cout << "  %%      %%  " << std::endl;
 						std::cout << "    %%  %%    " << std::endl;
@@ -211,8 +210,8 @@ int main() {
 						std::cout << "  %%      %%  " << std::endl;
 						std::cout << "%%          %%" << std::endl << std::endl;
 					}
-					else if (currentMark == nought) {
-						std::cout << "Player (O) won!" << std::endl << std::endl;
+					else if (currentMark == NOUGHT) {
+						std::cout << "Player (" << NOUGHT << ") won! Noughts won!" << std::endl << std::endl;
 						std::cout << "     %%%%      " << std::endl;
 						std::cout << "  %%      %%   " << std::endl;
 						std::cout << " %%        %%  " << std::endl;
