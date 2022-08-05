@@ -102,6 +102,41 @@ bool checkGrid(char spaces[NUMBER_OF_SPACES]) {
 		return false;
 }
 
+// a function that checks if any player won
+bool checkIfAnyPlayerWon(char spaces[NUMBER_OF_SPACES], char mark) {
+	if (checkGrid(spaces))
+	{
+		std::cout << "Victory! ";
+
+		if (mark == CROSS) {
+			std::cout << "Player (" << CROSS << ") won! Crosses won!" << std::endl << std::endl;
+			std::cout << "%%          %%" << std::endl;
+			std::cout << "  %%      %%  " << std::endl;
+			std::cout << "    %%  %%    " << std::endl;
+			std::cout << "      %%      " << std::endl;
+			std::cout << "    %%  %%    " << std::endl;
+			std::cout << "  %%      %%  " << std::endl;
+			std::cout << "%%          %%" << std::endl << std::endl;
+		}
+		else if (mark == NOUGHT) {
+			std::cout << "Player (" << NOUGHT << ") won! Noughts won!" << std::endl << std::endl;
+			std::cout << "     %%%%      " << std::endl;
+			std::cout << "  %%      %%   " << std::endl;
+			std::cout << " %%        %%  " << std::endl;
+			std::cout << "%%          %% " << std::endl;
+			std::cout << "%%          %% " << std::endl;
+			std::cout << " %%        %%  " << std::endl;
+			std::cout << "  %%      %%   " << std::endl;
+			std::cout << "     %%%%      " << std::endl << std::endl;
+		}
+
+		if (mark == CROSS || mark == NOUGHT)
+			return true;
+		else
+			return false;
+	}
+}
+
 // a function that asks if the players want another game
 bool askPlayersForAnotherGame() {
 	char choice;
@@ -120,7 +155,7 @@ bool askPlayersForAnotherGame() {
 			std::cout << std::endl << "Here we go!" << std::endl << std::endl;
 			return true;
 		default:
-			std::cout << "Wrong answer." << std::endl;
+			std::cout << "Wrong answer." << std::endl << std::endl;
 			break;
 		}
 	} while (!(choice == 'N' || choice == 'n' || choice == 'y' || choice == 'Y'));
@@ -172,7 +207,6 @@ int main() {
 
 				if (position < 1 || position > NUMBER_OF_SPACES)
 					std::cout << "There is no space " << position << "!" << std::endl << std::endl;
-
 				else if (markedSpaces[index])
 					std::cout << "This space is already marked!" << std::endl << std::endl;
 
@@ -194,38 +228,7 @@ int main() {
 
 			writeOutGrid(spaces);
 
-			// check if any player won
-			{
-				if (checkGrid(spaces))
-				{
-					std::cout << "Victory! ";
-
-					if (currentMark == CROSS) {
-						std::cout << "Player (" << CROSS << ") won! Crosses won!" << std::endl << std::endl;
-						std::cout << "%%          %%" << std::endl;
-						std::cout << "  %%      %%  " << std::endl;
-						std::cout << "    %%  %%    " << std::endl;
-						std::cout << "      %%      " << std::endl;
-						std::cout << "    %%  %%    " << std::endl;
-						std::cout << "  %%      %%  " << std::endl;
-						std::cout << "%%          %%" << std::endl << std::endl;
-					}
-					else if (currentMark == NOUGHT) {
-						std::cout << "Player (" << NOUGHT << ") won! Noughts won!" << std::endl << std::endl;
-						std::cout << "     %%%%      " << std::endl;
-						std::cout << "  %%      %%   " << std::endl;
-						std::cout << " %%        %%  " << std::endl;
-						std::cout << "%%          %% " << std::endl;
-						std::cout << "%%          %% " << std::endl;
-						std::cout << " %%        %%  " << std::endl;
-						std::cout << "  %%      %%   " << std::endl;
-						std::cout << "     %%%%      " << std::endl << std::endl;
-					}
-
-					victory = true;
-
-				}
-			}
+			victory = checkIfAnyPlayerWon(spaces, currentMark);
 
 			if (victory)
 				break;
