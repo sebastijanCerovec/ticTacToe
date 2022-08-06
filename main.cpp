@@ -81,7 +81,7 @@ bool checkRow(char spaces[NUMBER_OF_SPACES], int firstSpace, int secondSpace, in
 		return false;
 }
 
-// a function that checks the grid if a player has succeeded in placing three marks in a horizontal, vertical, or diagonal row 
+// a function that checks if a player has succeeded in placing three marks on the grid in a horizontal, vertical, or diagonal row 
 bool checkGrid(char spaces[NUMBER_OF_SPACES]) {
 	if (checkRow(spaces, 0, 1, 2)
 		||
